@@ -10,7 +10,6 @@ if (empty($title) || empty($content)) {
         'タイトルまたは本文が入力されていません';
 }
 
-// (2) データベースに接続
 $dbUserName = 'root';
 $dbPassword = 'password';
 $pdo = new PDO(
@@ -18,15 +17,14 @@ $pdo = new PDO(
   $dbUserName, 
   $dbPassword
 );
-// (3) SQL作成
+
 $stmt = $pdo->prepare("UPDATE pages SET title = :title, content = :content WHERE id = :id");
 
-// (4) 登録するデータをセット
+
 $stmt->bindParam( ':id', $id, PDO::PARAM_INT);
 $stmt->bindParam( ':title', $title, PDO::PARAM_STR);
 $stmt->bindParam( ':content', $content, PDO::PARAM_STR);
 
-// (5) SQL実行
 $res = $stmt->execute();
 
 ?>

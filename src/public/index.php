@@ -61,7 +61,6 @@ $pages = $statement->fetchAll(PDO::FETCH_ASSOC);
          <th>削除</th>
        </tr>
 
-      <!-- foreach1でtableデータを一覧表示 -->
       <?php foreach ($pages as $page): ?> 
        <tr>       
          <td><?php echo $page['title']. "\n"; ?></td>
