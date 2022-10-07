@@ -20,14 +20,17 @@ $pages = $statement->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>メモ一覧</title>
     </head>
-    <!-- メモを検索ボタン -->
+    
+    <form action="http://localhost:8080/index.php" method="get">
+    <input type="search" name="search" style="width:250px;" placeholder="検索キーワードを入力してください" >
+    <input type="submit" name="submit" value="検索" >
+    </form>
     
     <font size="5">メモ一覧</font><br />
 
@@ -36,11 +39,18 @@ $pages = $statement->fetchAll(PDO::FETCH_ASSOC);
     <div>
       <a href="create.php">メモを追加</a>
     </div>
-    <!-- sort を追加 phpかな -->
+    
     <div class="background right">
-      <a href="index.php?<?php array_multisort(array_column($pages,'created_at'),SORT_ASC, $pages); ?>">新しい順</a>
-      <a href="index.php?<?php array_multisort(array_column($pages,'created_at'),SORT_DESC, $pages); ?>">古い順</a>
-    </div>
+     <form action="index.php" method="POST">
+        <input type="submit" name="昇順" value="新しい順">
+        <input type="submit" name="降順" value="古い順">
+     </form>
+
+      <?php if("新しい順" === $_POST['昇順']){ ?>
+      <?php array_multisort(array_column($pages,'created_at'),SORT_ASC, $pages);}?>
+      <?php if("古い順" === $_POST['降順']){ ?>
+      <?php array_multisort(array_column($pages,'created_at'),SORT_DESC, $pages);}?>
+    </div>   
 
       <table border="1" width="800" bgcolor= #EEEEEE>
        <tr>
