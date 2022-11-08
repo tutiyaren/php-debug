@@ -8,27 +8,26 @@ if (empty($email) || empty($password)) {
 }
 
 if (empty($errors)) {
-    if (password_verify($password, $singin_password)) {
-        $dbUserName = 'root';
-        $dbPassword = 'password';
-        $pdo = new PDO(
-            'mysql:host=mysql; dbname=memo; charset=utf8',
-            $dbUserName,
-            $dbPassword
-        );
+    $dbUserName = 'root';
+    $dbPassword = 'password';
+    $pdo = new PDO(
+        'mysql:host=mysql; dbname=memo; charset=utf8',
+        $dbUserName,
+        $dbPassword
+    );
 
-        $stmt = " SELECT
+    $stmt = " SELECT
     *
     FROM users where email = '$email' ";
-        $stmt = $pdo->prepare($stmt);
-        $stmt->bindValue('email', $email, PDO::PARAM_INT);
-        $stmt->execute();
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare($stmt);
+    $stmt->bindValue('email', $email, PDO::PARAM_INT);
+    $stmt->execute();
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($users as $user) {
-            $singin_password = $user['password'];
-        }
-    } else {
+    foreach ($users as $user) {
+        $singin_password = $user['password'];
+    }
+    if (password_verify($password, $singin_password)) {
         $errors[] = 'メールアドレスまたはパスワードが違います';
     }
 }
