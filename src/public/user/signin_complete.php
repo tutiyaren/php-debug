@@ -27,7 +27,7 @@ if (empty($errors)) {
     foreach ($users as $user) {
         $singin_password = $user['password'];
     }
-    if (password_verify($password, $singin_password)) {
+    if (!password_verify($password, $singin_password)) {
         $errors[] = 'メールアドレスまたはパスワードが違います';
     }
 }
