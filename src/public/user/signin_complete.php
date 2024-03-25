@@ -18,18 +18,22 @@ if (empty($errors)) {
 
     $stmt = " SELECT
     *
-    FROM users where email = '$email' ";
+    FROM users where email = :email ";
     $stmt = $pdo->prepare($stmt);
-    $stmt->bindValue('email', $email, PDO::PARAM_INT);
+    $stmt->bindParam(':email', $email);
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    $error = "";
     foreach ($users as $user) {
         $singin_password = $user['password'];
+        if (!$user || $password !== $singin_password) {
+            $error = 'メールアドレスまたはパスワードが違います';
+            header('Location: signin.php');
+            exit();
+        }
     }
-    if (!password_verify($password, $singin_password)) {
-        $errors[] = 'メールアドレスまたはパスワードが違います';
-    }
+
 }
 ?>
 

@@ -1,5 +1,20 @@
 <?php
 session_start();
+
+$error = "";
+if(isset($_SESSION['errorMessage'])) {
+    $error = $_SESSION['errorMessage'];
+    unset($_SESSION['errorMessage']);
+}
+if(isset($_SESSION['errorPassword'])) {
+    $error = $_SESSION['errorPassword'];
+    unset($_SESSION['errorPassword']);
+}
+if(isset($_SESSION['errorEmail'])) {
+    $error = $_SESSION['errorEmail'];
+    unset($_SESSION['errorEmail']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -21,25 +36,6 @@ session_start();
     <p><a href="/user/signin.php">ログイン画面へ</a></p>
     
     
-    <?php if (!empty($_SESSION['errors'])): ?>
-        <?php foreach ($_SESSION['errors'] as $error): ?>
-            <p><?php echo $error . "\n"; ?></p> 
-        <?php endforeach; ?>
-    <?php endif; ?>
-
-    <?php if (!empty($_SESSION['errors2'])): ?>
-        <?php foreach ($_SESSION['errors2'] as $error2): ?>
-            <p><?php echo $error2 . "\n"; ?></p> 
-        <?php endforeach; ?>
-    <?php endif; ?>
-
-    <?php if (!empty($_SESSION['errors3'])): ?>
-        <?php foreach ($_SESSION['errors3'] as $error3): ?>
-            <p><?php echo $error3 . "\n"; ?></p> 
-        <?php endforeach; ?>
-    <?php endif; ?>
-
-    <?php unset($_SESSION); ?>
-
+    <?php echo $error ?>
 
 </html>

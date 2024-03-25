@@ -31,7 +31,10 @@ session_start();
         <?php endforeach; ?>
     <?php endif; ?>
 
+    <?php if (!empty($error)): ?>
+        <?php echo $error; ?>
+    <?php endif; ?>
+    
     <?php unset($_SESSION); ?>
-
 
 </html>
